@@ -7,5 +7,5 @@ export default interface IClient {
     RepositoryName(): string;
 
     // retrieve a lazy reader for blob at given path (relative to repository)
-    Reader(path: string): IBlobReader;
+    BlobReader(path: string): IBlobReader;
 }

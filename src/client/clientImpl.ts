@@ -37,7 +37,7 @@ export default class Client implements IClient {
     }
 
     // retrieve a lazy reader for blob at given path (relative to repository)
-    Reader(path: string): IBlobReader {
+    BlobReader(path: string): IBlobReader {
         return new BlobReader({
             axiosClient: this.axiosClient, 
             repository: this.repository,

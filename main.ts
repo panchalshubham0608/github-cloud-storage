@@ -6,7 +6,7 @@ let client = new Client({
 });
 
 console.log(client.RepositoryName());
-let reader = client.Reader('blob1');
+let reader = client.BlobReader('blob1');
 reader.Read().then(_ => {
     console.log('OK');
 }).catch(err => {
