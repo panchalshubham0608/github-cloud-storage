@@ -2,11 +2,11 @@
 import axios, { Axios} from "axios";
 import IClient from "./client";
 import IClientConfig from "./clientConfig";
-import IBlobReader from "./reader/blobReader";
-import BlobReader from "./reader/blobReaderImpl";
+import IBlobReader from "../reader/blobReader";
+import BlobReader from "../reader/blobReaderImpl";
 
 // implementation for Client
-class Client implements IClient {
+export default class Client implements IClient {
 
     // declare propeties
     private readonly repository: string;
@@ -20,7 +20,7 @@ class Client implements IClient {
         axios.defaults
         this.axiosClient = axios.create({
             // common and required properties for all objects
-            baseURL: `https://api.github.com`,
+            baseURL: `https://api.github.com/repos/${this.repository}/contents`,
             headers: {
                 'Authorization': `token ${clientConfig.token}`,
             },
@@ -46,6 +46,3 @@ class Client implements IClient {
     }
 
 }
-
-// export the client implementation
-export default Client;
