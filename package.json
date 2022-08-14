@@ -1,0 +1,26 @@
+{
+  "name": "@panchalshubham0608/github-cloud-storage",
+  "version": "1.0.1",
+  "description": "Library to interact with GitHub repositories as a cloud-storage service!",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panchalshubham0608/github-cloud-storage.git"
+  },
+  "keywords": [
+    "github",
+    "cloud-storage"
+  ],
+  "author": "@panchalshubham0608",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/panchalshubham0608/github-cloud-storage/issues"
+  },
+  "homepage": "https://github.com/panchalshubham0608/github-cloud-storage#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
