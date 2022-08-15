@@ -53,6 +53,7 @@ export default class BlobReaderMetadataResponse implements IBlobReaderMetadataRe
             url: obj.url,
             html_url: obj.html_url,
             git_url: obj.git_url,
+            type: obj.type
         });
     }
 

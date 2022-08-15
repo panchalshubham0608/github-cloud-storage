@@ -20,4 +20,7 @@ export default interface IBlobMetadata {
 
     // retrieves the `git_url` of the blob
     GitUrl(): string;
+
+    // retrieves the `type` of the blob
+    Type(): string;
 }
