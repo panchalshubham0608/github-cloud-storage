@@ -1,16 +1,21 @@
 // imports
 import IGitHubCloudStorageError from "./error";
+import GitHubCloudStorageErrorForbidden from "./forbiddenImpl";
+import GitHubCloudStorageErrorFound from "./foundImpl";
 import GitHubCloudStorageErrorNotFound from "./notFoundImpl";
 import GitHubCloudStorageErrorUnauthorized from "./unauthorizedImpl";
+import GitHubCloudStorageErrorUnknown from "./unknownError";
 
 // Handles the GitHub REST API errors and returns an appropriate error object
-export default function parseResponseError(err: any) : IGitHubCloudStorageError | null{
+export default function parseResponseError(err: any) : IGitHubCloudStorageError {
     let status = err.response.status;
     let path = err.request.path;
     let message = err.response.data.message;
     switch (status) {
-        case 404: return new GitHubCloudStorageErrorNotFound(message, path)
+        case 302: return new GitHubCloudStorageErrorFound(message, path);
         case 401: return new GitHubCloudStorageErrorUnauthorized(message, path);
-        default: return null;
+        case 403: return new GitHubCloudStorageErrorForbidden(message, path);
+        case 404: return new GitHubCloudStorageErrorNotFound(message, path);
+        default: return new GitHubCloudStorageErrorUnknown(message, path);     
     }
 };
