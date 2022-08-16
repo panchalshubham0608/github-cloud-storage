@@ -6,4 +6,4 @@ export default class GitHubCloudStorageErrorUnknown extends GitHubCloudStorageEr
     constructor(message:string, path:string) { 
         super(500, message, path);
     }
-};
+}

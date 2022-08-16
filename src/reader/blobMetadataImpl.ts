@@ -11,7 +11,7 @@ interface IBlobMetadataParams {
     html_url:string;
     git_url:string;
     type: string;
-};
+}
 
 // defines the implementation for `IBlobMetadata`
 export default class BlobMetadata implements IBlobMetadata {
@@ -47,4 +47,4 @@ export default class BlobMetadata implements IBlobMetadata {
 
     // retrieves the `type` of the blob
     Type(): string { return this.params.type; }
-};
+}

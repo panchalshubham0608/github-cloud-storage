@@ -6,4 +6,4 @@ export default class GitHubCloudStorageErrorForbidden extends GitHubCloudStorage
     constructor(message:string, path:string) { 
         super(403, message, path);
     }
-};
+}

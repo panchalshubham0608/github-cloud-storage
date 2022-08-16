@@ -22,4 +22,4 @@ export default interface IBlobReaderMetadataResponse {
 
     // retrieve the list of blob metadata if the blob at given path is a `directory' otherwise returns null
     BlobMetadataList(): Array<IBlobMetadata> | null;
-};
+}

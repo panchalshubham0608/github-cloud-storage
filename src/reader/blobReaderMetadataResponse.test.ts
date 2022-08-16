@@ -11,17 +11,17 @@ import BlobReaderMetadataResponse from './blobReaderMetadataResponseImpl';
 describe('BlobReader GetMetadata', () => {
 
     // token used for testing
-    let token:string = process.env.PAT || '';
-    let anotherToken:string = process.env.ANOTHER_PAT || '';
-    let owner:string = process.env.OWNER || '';
+    const token:string = process.env.PAT || '';
+    const anotherToken:string = process.env.ANOTHER_PAT || '';
+    const owner:string = process.env.OWNER || '';
     
     describe('GetMetadata access-management', () => {
 
         it('GetMetadata with empty token should fail with 401', async () => {
-            let repository = `github-cloud-storage-test-repo`;
-            let path = `blobs/blob1`;
-            let client: IClient = new Client({repository, token: '', owner});
-            let blobReader: IBlobReader = client.BlobReader(path);
+            const repository = `github-cloud-storage-test-repo`;
+            const path = `blobs/blob1`;
+            const client: IClient = new Client({repository, token: '', owner});
+            const blobReader: IBlobReader = client.BlobReader(path);
     
             let err: any = null;
             try { await blobReader.GetMetadata() } catch (error) { err = error; }
@@ -30,10 +30,10 @@ describe('BlobReader GetMetadata', () => {
         });
 
         it('GetMetadata with incorrect token should fail with 401', async () => {
-            let repository = `github-cloud-storage-test-repo`;
-            let path = `blobs/blob1`;
-            let client: IClient = new Client({repository, token: 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', owner});
-            let blobReader: IBlobReader = client.BlobReader(path);
+            const repository = `github-cloud-storage-test-repo`;
+            const path = `blobs/blob1`;
+            const client: IClient = new Client({repository, token: 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', owner});
+            const blobReader: IBlobReader = client.BlobReader(path);
     
             let err: any = null;
             try { await blobReader.GetMetadata() } catch (error) { err = error; }
@@ -42,10 +42,10 @@ describe('BlobReader GetMetadata', () => {
         });
 
         it('GetMetadata with non-access to repo token should fail with 404', async () => {
-            let repository = `github-cloud-storage-test-repo`;
-            let path = `blobs/blob1`;
-            let client: IClient = new Client({repository, token: anotherToken, owner});
-            let blobReader: IBlobReader = client.BlobReader(path);
+            const repository = `github-cloud-storage-test-repo`;
+            const path = `blobs/blob1`;
+            const client: IClient = new Client({repository, token: anotherToken, owner});
+            const blobReader: IBlobReader = client.BlobReader(path);
     
             let err: any = null;
             try { await blobReader.GetMetadata() } catch (error) { err = error; }
@@ -54,10 +54,10 @@ describe('BlobReader GetMetadata', () => {
         });
 
         it('GetMetadata with correct token should not fail for file', async () => {
-            let repository = `github-cloud-storage-test-repo`;
-            let path = `blobs/blob1`;
-            let client: IClient = new Client({repository, token, owner});
-            let blobReader: IBlobReader = client.BlobReader(path);
+            const repository = `github-cloud-storage-test-repo`;
+            const path = `blobs/blob1`;
+            const client: IClient = new Client({repository, token, owner});
+            const blobReader: IBlobReader = client.BlobReader(path);
     
             let err: any = null;
             try { await blobReader.GetMetadata() } catch (error) { err = error; }
@@ -65,10 +65,10 @@ describe('BlobReader GetMetadata', () => {
         });
 
         it('GetMetadata with correct token should not fail for directory', async () => {
-            let repository = `github-cloud-storage-test-repo`;
-            let path = `blobs`;
-            let client: IClient = new Client({repository, token, owner});
-            let blobReader: IBlobReader = client.BlobReader(path);
+            const repository = `github-cloud-storage-test-repo`;
+            const path = `blobs`;
+            const client: IClient = new Client({repository, token, owner});
+            const blobReader: IBlobReader = client.BlobReader(path);
     
             let err: any = null;
             try { await blobReader.GetMetadata() } catch (error) { err = error; }
@@ -80,10 +80,10 @@ describe('BlobReader GetMetadata', () => {
     describe('GetMetadata content-management', () => {
 
         it('GetMetadata for non-existing blob should fail with 404', async () => {
-            let repository = `repo1`;
-            let path = `blobs/blob1`;
-            let client: IClient = new Client({repository, token, owner});
-            let blobReader: IBlobReader = client.BlobReader(path);
+            const repository = `repo1`;
+            const path = `blobs/blob1`;
+            const client: IClient = new Client({repository, token, owner});
+            const blobReader: IBlobReader = client.BlobReader(path);
     
             let err: any = null;
             try { await blobReader.GetMetadata() } catch (error) { err = error; }
@@ -92,10 +92,10 @@ describe('BlobReader GetMetadata', () => {
         });
 
         it('GetMetadata for file should succeed and retrieve correct details', async () => {
-            let repository = `github-cloud-storage-test-repo`;
-            let path = `blobs/blob1`;
-            let client: IClient = new Client({repository, token, owner});
-            let blobReader: IBlobReader = client.BlobReader(path);
+            const repository = `github-cloud-storage-test-repo`;
+            const path = `blobs/blob1`;
+            const client: IClient = new Client({repository, token, owner});
+            const blobReader: IBlobReader = client.BlobReader(path);
     
             let err: any = null;
             let blobMetadataResponse: IBlobReaderMetadataResponse | null = null;
@@ -110,7 +110,7 @@ describe('BlobReader GetMetadata', () => {
             expect(blobMetadataResponse?.IsDirectory()).toBe(false);
             expect(blobMetadataResponse?.BlobMetadataList()).toBe(null);
             expect(blobMetadataResponse?.BlobMetadata()).not.toBe(null);
-            let blobMetadata = blobMetadataResponse?.BlobMetadata();
+            const blobMetadata = blobMetadataResponse?.BlobMetadata();
             expect(blobMetadata?.Name()).toBe('blob1');
             expect(blobMetadata?.RelativePath()).toBe('blobs/blob1');
             expect(blobMetadata?.SHA()).toBe('495cc9fa8f9c127aaee426bcb7e09f46d82199d7');
@@ -122,10 +122,10 @@ describe('BlobReader GetMetadata', () => {
         });
 
         it('GetMetadata for directory should succeed and retrieve correct details', async () => {
-            let repository = `github-cloud-storage-test-repo`;
-            let path = `blobs`;
-            let client: IClient = new Client({repository, token, owner});
-            let blobReader: IBlobReader = client.BlobReader(path);
+            const repository = `github-cloud-storage-test-repo`;
+            const path = `blobs`;
+            const client: IClient = new Client({repository, token, owner});
+            const blobReader: IBlobReader = client.BlobReader(path);
     
             let err: any = null;
             let blobMetadataResponse: IBlobReaderMetadataResponse | null = null;
@@ -140,7 +140,7 @@ describe('BlobReader GetMetadata', () => {
             expect(blobMetadataResponse?.IsDirectory()).toBe(true);
             expect(blobMetadataResponse?.BlobMetadataList()).not.toBe(null);
             expect(blobMetadataResponse?.BlobMetadata()).toBe(null);
-            let blobMetadataList = blobMetadataResponse?.BlobMetadataList();
+            const blobMetadataList = blobMetadataResponse?.BlobMetadataList();
             expect(blobMetadataList?.length).toBe(3);
             if (blobMetadataList) {
                 expect(blobMetadataList[0]?.Name()).toBe('blob1');

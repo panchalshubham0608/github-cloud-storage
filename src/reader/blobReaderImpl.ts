@@ -50,7 +50,7 @@ export default class BlobReader implements IBlobReader {
                 }
             }).then(resp => {
                 console.log(resp);
-                let readResponse: IBlobReaderReadResponse = new BlobReaderReadResponse({
+                const readResponse: IBlobReaderReadResponse = new BlobReaderReadResponse({
                     etag: resp.headers['etag'].replace(/"/g, ''),
                     contentLength: parseInt(resp.headers['content-length']),
                     contentType: resp.headers['content-type'],
@@ -61,7 +61,7 @@ export default class BlobReader implements IBlobReader {
                 });
                 return resolve(readResponse);
             }).catch(err => {
-                let wrappedError = parseResponseError(err);
+                const wrappedError = parseResponseError(err);
                 reject(wrappedError);
             });
         });
@@ -75,7 +75,7 @@ export default class BlobReader implements IBlobReader {
                     'Accept': GitHubRESTAPIAcceptType.JSON
                 }
             }).then(resp => {
-                let wrappedResponse = new BlobReaderMetadataResponse({
+                const wrappedResponse = new BlobReaderMetadataResponse({
                     etag: resp.headers['etag'].replace(/"/g, ''),
                     lastModified: new Date(resp.headers['last-modified']),
                     githubRequestID: resp.headers['x-github-request-id'],
@@ -84,10 +84,10 @@ export default class BlobReader implements IBlobReader {
                 });
                 resolve(wrappedResponse);
             }).catch(err => {
-                let wrappedError = parseResponseError(err);
+                const wrappedError = parseResponseError(err);
                 reject(wrappedError);
             });
         });
     }
-};
+}
 

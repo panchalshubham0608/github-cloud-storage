@@ -6,4 +6,4 @@ export default class GitHubCloudStorageErrorNotFound extends GitHubCloudStorageE
     constructor(message:string, path:string) { 
         super(404, message, path);
     }
-};
+}

@@ -7,22 +7,22 @@ import IBlobReader from './blobReader';
 describe('BlobReader', () => {
 
     // token used for testing
-    let token:string = 'token';
-    let owner:string = 'owner';
+    const token = 'token';
+    const owner = 'owner';
     
     it('BlobReader should retrieve correct repository name', () => {
-        let repository = `repo1`;
-        let path = `blobs/blob0`;
-        let client: IClient = new Client({repository, token, owner});
-        let blobReader: IBlobReader = client.BlobReader(path);
+        const repository = `repo1`;
+        const path = `blobs/blob0`;
+        const client: IClient = new Client({repository, token, owner});
+        const blobReader: IBlobReader = client.BlobReader(path);
         expect(blobReader.RepositoryName()).toBe(repository);
     });
     
     it('BlobReader should retrieve correct path', () => {
-        let repository = `repo1`;
-        let path = `blobs/blob0`;
-        let client: IClient = new Client({repository, token, owner});
-        let blobReader: IBlobReader = client.BlobReader(path);
+        const repository = `repo1`;
+        const path = `blobs/blob0`;
+        const client: IClient = new Client({repository, token, owner});
+        const blobReader: IBlobReader = client.BlobReader(path);
         expect(blobReader.Path()).toBe(path);
     });
 

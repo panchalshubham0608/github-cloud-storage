@@ -30,4 +30,4 @@ export default class GitHubCloudStorageError implements IGitHubCloudStorageError
         return this.message;
     }
     
-};
+}

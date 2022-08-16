@@ -9,6 +9,4 @@ export default interface IGitHubCloudStorageError {
 
     // retieve the message
     Message(): string;
-};
-
-
+}

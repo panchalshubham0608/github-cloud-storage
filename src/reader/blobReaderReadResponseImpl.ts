@@ -10,7 +10,7 @@ interface IBlobReaderReadResponseConfig {
     readonly githubRequestID: string;
     readonly requestURL:string;
     readonly data:string;
-};
+}
 
 
 // implements the IBlobReaderReadResponse

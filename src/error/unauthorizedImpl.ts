@@ -7,4 +7,4 @@ export default class GitHubCloudStorageErrorUnauthorized extends GitHubCloudStor
     constructor(message:string, path:string) { 
         super(401, message, path);
     }
-};
+}

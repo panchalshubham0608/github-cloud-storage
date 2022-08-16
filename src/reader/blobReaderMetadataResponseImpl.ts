@@ -33,7 +33,7 @@ export default class BlobReaderMetadataResponse implements IBlobReaderMetadataRe
         if (this.isDirectory) {
             // iterate through the array
             this.blobMetadataList = [];
-            for (let obj of this.params.data) {
+            for (const obj of this.params.data) {
                 this.blobMetadataList.push(this.responseDataToBlobMetadata(obj));
             }
         } else {
@@ -77,4 +77,4 @@ export default class BlobReaderMetadataResponse implements IBlobReaderMetadataRe
 
     // retrieve the list of blob metadata if the blob at given path is a `directory' otherwise returns null
     BlobMetadataList(): Array<IBlobMetadata> | null { return this.isDirectory ? Object.assign([], this.blobMetadataList) : null; }    
-};
+}
