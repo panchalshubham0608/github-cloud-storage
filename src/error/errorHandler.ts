@@ -4,7 +4,7 @@ import GitHubCloudStorageErrorForbidden from "./forbiddenImpl";
 import GitHubCloudStorageErrorFound from "./foundImpl";
 import GitHubCloudStorageErrorNotFound from "./notFoundImpl";
 import GitHubCloudStorageErrorUnauthorized from "./unauthorizedImpl";
-import GitHubCloudStorageErrorUnknown from "./unknownError";
+import GitHubCloudStorageErrorUnknown from "./unknownErrorImpl";
 
 // Handles the GitHub REST API errors and returns an appropriate error object
 export default function parseResponseError(err: any) : IGitHubCloudStorageError {

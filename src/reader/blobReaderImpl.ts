@@ -3,8 +3,8 @@ import { Axios } from "axios";
 import GitHubRESTAPIAcceptType from "../acceptReponse";
 import IBlobReader from "./blobReader";
 import parseResponseError from "../error/errorHandler";
-import IBlobReaderReadResponse from "./blobReaderReadResponse";
-import BlobReaderReadResponse from "./blobReaderReadResponseImpl";
+import IBlobReaderContentResponse from "./blobReaderContentResponse";
+import BlobReaderContentResponse from "./blobReaderContentResponseImpl";
 import IBlobReaderMetadataResponse from "./blobReaderMetadataResponse";
 import BlobReaderMetadataResponse from "./blobReaderMetadataResponseImpl";
 
@@ -42,24 +42,21 @@ export default class BlobReader implements IBlobReader {
     }
 
     // retrieve the content of the blob at given path
-    Read(): Promise<IBlobReaderReadResponse> {
-        return new Promise<IBlobReaderReadResponse>((resolve, reject) => {
+    GetContent(): Promise<IBlobReaderContentResponse> {
+        return new Promise<IBlobReaderContentResponse>((resolve, reject) => {
             this.axiosClient.get(`/${this.path}`, {
                 headers: {
                     'Accept': GitHubRESTAPIAcceptType.RAW
                 }
             }).then(resp => {
-                console.log(resp);
-                const readResponse: IBlobReaderReadResponse = new BlobReaderReadResponse({
+                const readResponse: IBlobReaderContentResponse = new BlobReaderContentResponse({
                     etag: resp.headers['etag'].replace(/"/g, ''),
-                    contentLength: parseInt(resp.headers['content-length']),
-                    contentType: resp.headers['content-type'],
                     lastModified: new Date(resp.headers['last-modified']),
                     githubRequestID: resp.headers['x-github-request-id'],
-                    requestURL: [resp.config.baseURL, resp.config.url].join(''),
+                    requestUrl: resp.request.path,
                     data: resp.data
                 });
-                return resolve(readResponse);
+                resolve(readResponse);
             }).catch(err => {
                 const wrappedError = parseResponseError(err);
                 reject(wrappedError);

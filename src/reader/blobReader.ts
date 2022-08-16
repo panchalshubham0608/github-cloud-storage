@@ -1,6 +1,6 @@
 // imports
 import IBlobReaderMetadataResponse from "./blobReaderMetadataResponse"
-import IBlobReaderReadResponse from "./blobReaderReadResponse"
+import IBlobReaderContentResponse from "./blobReaderContentResponse"
 
 // `IBlobReader` allows you to read contents of a blob
 export default interface IBlobReader {
@@ -14,5 +14,5 @@ export default interface IBlobReader {
     GetMetadata(): Promise<IBlobReaderMetadataResponse>
 
     // retrieve the content of the blob 
-    Read(): Promise<IBlobReaderReadResponse>
+    GetContent(): Promise<IBlobReaderContentResponse>
 }

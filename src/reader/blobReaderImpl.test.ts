@@ -98,7 +98,7 @@ describe('BlobReader', () => {
 
     // });
 
-    // describe('BlobReaderReadResponse blob content', () => {
+    // describe('IBlobReadeContentResponse blob content', () => {
 
     //     it('BlobReader read non-existing blob should fail with 404', async () => {
     //         let repository = `repo1`;
@@ -119,11 +119,11 @@ describe('BlobReader', () => {
     //         let blobReader: IBlobReader = client.BlobReader(path);
     
     //         let err: any = null;
-    //         let response: IBlobReaderReadResponse | null = null;
+    //         let response: IBlobReadeContentResponse | null = null;
     //         try { response = await blobReader.Read() } catch (error) { err = error; }
     //         expect(err).toBe(null);
     //         expect(response).not.toBe(null);
-    //         expect(response).toBeInstanceOf(BlobReaderReadResponse);
+    //         expect(response).toBeInstanceOf(IBlobReadeContentResponse);
     //         expect(response?.ETag()).toBe('495cc9fa8f9c127aaee426bcb7e09f46d82199d7');
     //         expect(response?.ContentLength()).toBe(13);
     //         expect(response?.ContentType()).toBe('application/vnd.github.v3.raw; charset=utf-8');
@@ -141,11 +141,11 @@ describe('BlobReader', () => {
     //         let blobReader: IBlobReader = client.BlobReader(path);
     
     //         let err: any = null;
-    //         let response: IBlobReaderReadResponse | null = null;
+    //         let response: IBlobReadeContentResponse | null = null;
     //         try { response = await blobReader.Read() } catch (error) { err = error; }
     //         expect(err).toBe(null);
     //         expect(response).not.toBe(null);
-    //         // expect(response).toBeInstanceOf(BlobReaderReadResponse);
+    //         // expect(response).toBeInstanceOf(IBlobReadeContentResponse);
     //         // console.log(response);
     //         // expect(response?.ETag()).toBe('495cc9fa8f9c127aaee426bcb7e09f46d82199d7');
     //         // expect(response?.ContentLength()).toBe(13);
