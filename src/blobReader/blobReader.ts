@@ -1,5 +1,5 @@
 // imports
-import BlobMetadata from "./blobMetadata"
+import BlobMetadata from "../common/blobMetadata"
 import BlobContent from "./blobContent"
 
 // `IBlobReader` allows you to read contents of a blob

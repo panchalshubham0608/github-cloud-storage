@@ -1,6 +1,6 @@
 // imports
 import BlobContent from "./blobContent";
-import BlobMetadata from './blobMetadata';
+import BlobMetadata from '../common/blobMetadata';
 import GitHubCloudStorageError from '../err/error';
 import * as errcodes from '../err/errcodes';
 import { AxiosResponse } from 'axios';

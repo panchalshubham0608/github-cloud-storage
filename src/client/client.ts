@@ -1,5 +1,6 @@
 // imports
 import IBlobReader from "../blobReader/blobReader";
+import IBlobWriter from '../blobWriter/blobWriter';
 
 // Defines the prototype for Client
 export default interface IClient {
@@ -18,7 +19,16 @@ export default interface IClient {
 
     /**
      * Retrieve an instance of BlobReader to facilitate reading of blobs
-     * @return string: BlobReader
+     * https://docs.github.com/en/rest/repos/contents#get-repository-content
+     * @return BlobReader
      */
     NewBlobReader(): IBlobReader;
+
+    /**
+     * Retrieve an instance of BlobWriter to facilitate writing of blobs
+     * https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents
+     * https://docs.github.com/en/rest/repos/contents#delete-a-file
+     * @return BlobWriter
+     */
+    NewBlobWriter(): IBlobWriter;
 }

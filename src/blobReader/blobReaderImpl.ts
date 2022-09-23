@@ -4,7 +4,7 @@ import GitHubRESTAPIAcceptType from "../util/acceptReponse";
 import IBlobReader from "./blobReader";
 import wrap from "../err/errorHandler";
 import BlobContent from "./blobContent";
-import BlobMetadata from "./blobMetadata";
+import BlobMetadata from "../common/blobMetadata";
 import * as helpers from './helper';
 
 // configuration to create a new `BlobReader`
