@@ -1,5 +1,5 @@
 // Defines the prototype for Clientconfiguration
-export default interface IClientConfig {
+export default interface ClientConfig {
     readonly repository: string;
     readonly owner:string;
     readonly token: string;

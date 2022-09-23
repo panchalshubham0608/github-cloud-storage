@@ -1,9 +1,9 @@
 // imports
 import axios, { Axios} from "axios";
 import IClient from "./client";
-import IClientConfig from "./clientConfig";
-import IBlobReader from "../reader/blobReader";
-import BlobReader from "../reader/blobReaderImpl";
+import ClientConfig from "./clientConfig";
+import IBlobReader from "../blobReader/blobReader";
+import BlobReader from "../blobReader/blobReaderImpl";
 
 // implementation for Client
 export default class Client implements IClient {
@@ -14,12 +14,11 @@ export default class Client implements IClient {
     private readonly axiosClient: Axios
 
     // constructor for the client
-    constructor(clientConfig: IClientConfig) {
+    constructor(clientConfig: ClientConfig) {
         // initialize the properties
         this.repository = clientConfig.repository;
         this.owner = clientConfig.owner;
         // create new `axios` client to make requests
-        axios.defaults
         this.axiosClient = axios.create({
             // common and required properties for all objects
             baseURL: `https://api.github.com/repos/${this.owner}/${this.repository}/contents`,
@@ -32,24 +31,32 @@ export default class Client implements IClient {
         })
     }
 
-    // retrieve the name of the repository for which client is created
+    /**
+     * Retrieve the name of the respository for which the client is created
+     * @return string: name of the repository
+     */
     RepositoryName(): string {
         // return the name of the repository this client is created for
         return this.repository;
     }
 
-    // retrieve the name of the owner for which client is created
-    OwnerName(): string {
+    /**
+     * Retrieve the name of the owner for which the client is created
+     * @return string: name of the owner of the repository
+     */
+     OwnerName(): string {
         // return the name of the owner this client is created for
         return this.owner
     }
 
-    // retrieve a lazy reader for blob at given path (relative to repository)
-    BlobReader(path: string): IBlobReader {
+    /**
+     * Retrieve an instance of BlobReader to facilitate reading of blobs
+     * @return string: BlobReader
+     */
+     NewBlobReader(): IBlobReader {
         return new BlobReader({
             axiosClient: this.axiosClient, 
             repository: this.repository,
-            path: path
         })
     }
 

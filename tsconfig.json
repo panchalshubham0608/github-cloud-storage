@@ -3,6 +3,7 @@
     "target": "es2016",
     "module": "commonjs",
     "outDir": "dist",
+    "declaration": true,
     "baseUrl": "./",
     "strict": true,
     "esModuleInterop": true,
@@ -19,6 +20,11 @@
   },
   "include": [
     "src/**/*.ts",
-    "main.ts"
+    "index.ts"
+  ],
+  "exclude": [
+    "dist",
+    "src/**/*.test.ts",
+    "node_modules"
   ]
 }

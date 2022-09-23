@@ -1,14 +1,24 @@
 // imports
-import IBlobReader from "../reader/blobReader";
+import IBlobReader from "../blobReader/blobReader";
 
 // Defines the prototype for Client
 export default interface IClient {
-    // retrieve the name of the repository for which client is created
-    RepositoryName(): string;
 
-    // retriebe the name of the owner for which client is created
-    OwnerName(): string;
+    /**
+     * Retrieve the name of the respository for which the client is created
+     * @return string: name of the repository
+     */
+     RepositoryName(): string;
 
-    // retrieve a lazy reader for blob at given path (relative to repository)
-    BlobReader(path: string): IBlobReader;
+    /**
+     * Retrieve the name of the owner for which the client is created
+     * @return string: name of the owner of the repository
+     */
+     OwnerName(): string;
+
+    /**
+     * Retrieve an instance of BlobReader to facilitate reading of blobs
+     * @return string: BlobReader
+     */
+    NewBlobReader(): IBlobReader;
 }
