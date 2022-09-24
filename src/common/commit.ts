@@ -1,5 +1,5 @@
 // Represents the details of a commit
-export default interface CommitDetails {
+export default interface Commit {
     // the sha of the commit
     sha: string;
     // the node_id of the commit

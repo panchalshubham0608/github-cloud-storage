@@ -1,9 +1,11 @@
 // imports
-import axios, { Axios} from "axios";
+import axios, { Axios } from "axios";
 import IClient from "./client";
 import ClientConfig from "./clientConfig";
 import IBlobReader from "../blobReader/blobReader";
 import BlobReader from "../blobReader/blobReaderImpl";
+import IBlobWriter from "../blobWriter/blobWriter";
+import BlobWriter from '../blobWriter/blobWriterImpl';
 
 // implementation for Client
 export default class Client implements IClient {
@@ -44,7 +46,7 @@ export default class Client implements IClient {
      * Retrieve the name of the owner for which the client is created
      * @return string: name of the owner of the repository
      */
-     OwnerName(): string {
+    OwnerName(): string {
         // return the name of the owner this client is created for
         return this.owner
     }
@@ -53,9 +55,22 @@ export default class Client implements IClient {
      * Retrieve an instance of BlobReader to facilitate reading of blobs
      * @return string: BlobReader
      */
-     NewBlobReader(): IBlobReader {
+    NewBlobReader(): IBlobReader {
         return new BlobReader({
-            axiosClient: this.axiosClient, 
+            axiosClient: this.axiosClient,
+            repository: this.repository,
+        })
+    }
+
+    /**
+     * Retrieve an instance of BlobWriter to facilitate writing of blobs
+     * https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents
+     * https://docs.github.com/en/rest/repos/contents#delete-a-file
+     * @return BlobWriter
+     */
+    NewBlobWriter(): IBlobWriter {
+        return new BlobWriter({
+            axiosClient: this.axiosClient,
             repository: this.repository,
         })
     }

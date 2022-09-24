@@ -8,7 +8,7 @@ import { AxiosResponse } from 'axios';
 /**
  * Takes the HTTP response and construct an appropriate response for the client
  * If the blob at given path is found to be a `directory` 
- * then returns an error of ErrKindMethodNotAllowed
+ * then returns an error of ErrKindUnprocessableEntityErrKindUnprocessableEntity
  * If the blob at given path is found to be a `file`
  * then returns BlobContent object
  * 
@@ -19,7 +19,7 @@ import { AxiosResponse } from 'axios';
 const constructBlobContent = (resp : AxiosResponse<any, any>) : [BlobContent | null, GitHubCloudStorageError | null]  => {
     // check if the blob at given path is a directory
     if (resp.data instanceof Array) {
-        return [null, new errcodes.ErrKindMethodNotAllowed(
+        return [null, new errcodes.ErrKindUnprocessableEntity(
             "Blob is a directory",
             resp.request.path
         )]
@@ -36,7 +36,7 @@ const constructBlobContent = (resp : AxiosResponse<any, any>) : [BlobContent | n
 /**
  * Takes the HTTP response and construct an appropriate response for the client
  * If the blob at given path is found to be a `directory`
- * then returns an error of ErrKindMethodNotAllowed
+ * then returns an error of ErrKindUnprocessableEntity
  * If the blob at given path is found to be a `file`
  * then returns BlobMetadata object
  * 
@@ -46,7 +46,7 @@ const constructBlobContent = (resp : AxiosResponse<any, any>) : [BlobContent | n
 const constructBlobMetadata = (resp: AxiosResponse<any, any>) : [BlobMetadata | null, GitHubCloudStorageError | null] => {
     // check if the blob at given path is a directory
     if (resp.data instanceof Array) {
-        return [null, new errcodes.ErrKindMethodNotAllowed(
+        return [null, new errcodes.ErrKindUnprocessableEntity(
             "Blob is a directory",
             resp.request.path
         )]
@@ -70,7 +70,7 @@ const constructBlobMetadata = (resp: AxiosResponse<any, any>) : [BlobMetadata | 
 /**
  * Takes the HTTP response and construct an appropriate response for the client
  * If the blob at given path is found to be a `file`
- * then returns an error of ErrKindMethodNotAllowed
+ * then returns an error of ErrKindUnprocessableEntity
  * If the blob at given path is found to be a `directory`
  * then returns Array<BlobMetadata> containing the list of metadata of each blobs
  * 
@@ -80,7 +80,7 @@ const constructBlobMetadata = (resp: AxiosResponse<any, any>) : [BlobMetadata | 
 const constructBlobsMetadataList = (resp: AxiosResponse<any, any>) : [Array<BlobMetadata> | null, GitHubCloudStorageError | null] => {
     // check if the blob at given path is a directory
     if (!(resp.data instanceof Array)) {
-        return [null, new errcodes.ErrKindMethodNotAllowed(
+        return [null, new errcodes.ErrKindUnprocessableEntity(
             "Blob is a file",
             resp.request.path
         )]

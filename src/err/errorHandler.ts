@@ -12,6 +12,10 @@ export default function wrap(err: any): GitHubCloudStorageError {
         case 401: return new errcodes.ErrKindUnauthorized(message, path);
         case 403: return new errcodes.ErrKindForbidden(message, path);
         case 404: return new errcodes.ErrKindNotFound(message, path);
+        case 409: return new errcodes.ErrKindConflict(message, path);
+        case 422: return new errcodes.ErrKindUnprocessableEntity(message, path);
+        case 405: return new errcodes.ErrKindMethodNotAllowed(message, path);
+        case 503: return new errcodes.ErrKindServiceUnavailable(message, path);
         default: return new errcodes.ErrKindUnknown(message, path);
     }
 }

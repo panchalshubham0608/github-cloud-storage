@@ -1,6 +1,6 @@
 // imports
 import BlobMetadata from '../common/blobMetadata';
-import CommitDetails from '../common/commitDetails';
+import Commit from '../common/commit';
 
 // `IBlobWriter` allows you to write/delete contents of a blob
 export default interface IBlobWriter {
@@ -16,16 +16,16 @@ export default interface IBlobWriter {
      * If the file type blob already exist at given path then it will be overwritten
      * @param path: path of the blob
      * @param content: content to be written
-     * @throws ErrKindMethodNotAllowed if there is an existing directory at given path
-     * @return Promise<[CommitDetails, BlobMetadata]> - metadata of the blob created & commit details
+     * @throws ErrKindUnprocessableEntity if there is an existing directory at given path
+     * @return Promise<[Commit, BlobMetadata]> - metadata of the blob created & commit details
      */
-    Write(path: string, content: string): Promise<[CommitDetails, BlobMetadata]>
+    Write(path: string, content: string): Promise<[Commit, BlobMetadata]>
 
     /**
      * Delete the blob (type `file`) at given path
      * @param path: path of the blob to be deleted
-     * @throws ErrKindMethodNotAllowed if the blob is a directory
-     * @return Promise<CommitDetails> - details of the commit
+     * @throws ErrKindUnprocessableEntity if the blob is a directory
+     * @return Promise<Commit> - details of the commit
      */
-    Delete(path: string): Promise<CommitDetails>
+    Delete(path: string): Promise<Commit>
 }

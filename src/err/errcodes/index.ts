@@ -5,6 +5,9 @@ import ErrKindMethodNotAllowed from './errKindMethodNotAllowed';
 import ErrKindNotFound from './errKindNotFound';
 import ErrKindUnauthorized from './errKindUnauthorized';
 import ErrKindUnknown from './errKindUnknown';
+import ErrKindUnprocessableEntity from './errKindUnprocessableEntity';
+import ErrKindConflict from './errKindConflict';
+import ErrKindServiceUnavailable from './errKindServiceUnavailable';
 
 // export all the errors
 export {
@@ -13,5 +16,8 @@ export {
     ErrKindMethodNotAllowed,
     ErrKindNotFound,
     ErrKindUnauthorized,
-    ErrKindUnknown
+    ErrKindUnknown,
+    ErrKindUnprocessableEntity,
+    ErrKindConflict,
+    ErrKindServiceUnavailable
 };
