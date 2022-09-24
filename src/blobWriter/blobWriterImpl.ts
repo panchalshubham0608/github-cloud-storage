@@ -46,50 +46,33 @@ export default class BlobWriter implements IBlobWriter {
      * @return Promise<[Commit, BlobMetadata]> - metadata of the blob created & commit details
      */
     Write(path: string, content: string): Promise<[Commit, BlobMetadata]> {
-        return new Promise<[Commit, BlobMetadata]>(async (resolve, reject) => {
+        return new Promise<[Commit, BlobMetadata]>((resolve, reject) => {
 
             // create a blob reader to read blob metadata
-            let blobReader = new BlobReader({
+            const blobReader = new BlobReader({
                 axiosClient: this.axiosClient,
                 repository: this.repository
             });
 
             // retrieve the sha of existing file (if any)
-            let old_sha = null;
-            try {
-                let blobMetadata = await blobReader.GetMetadata(path);
-                old_sha = blobMetadata.sha;
-            } catch (err) {
-                if (err instanceof errcodes.ErrKindUnprocessableEntity) {
-                    // blob is a directory
+            blobReader.GetMetadata(path).then(blobMetadata => {
+                // if the blob already exist then update it
+                this.Update(path, content, blobMetadata.sha).then(([commit, blobMetadata]) => {
+                    resolve([commit, blobMetadata]);
+                }).catch(err => {
                     reject(err);
-                } else if (!(err instanceof errcodes.ErrKindNotFound)) {
-                    // some other error
-                    reject(err);
-                }
-            }
-
-            // create a new blob
-            let payload = {
-                message: `Create ${path}`,
-                content: Buffer.from(content).toString('base64'),
-                sha: old_sha
-            }
-            if (old_sha !== null) {
-                payload['sha'] = old_sha;
-                payload['message'] = `Update ${path}`;
-            }
-
-            this.axiosClient.put(`/${path}`, payload, {
-                headers: {
-                    'Accept': GitHubRESTAPIAcceptType.JSON
-                }
-            }).then(resp => {
-                let wrappedResponse = helper.constructCommitAndBlobMetadata(resp);
-                resolve(wrappedResponse);
+                });
             }).catch(err => {
-                const wrappedError = wrap(err);
-                return wrappedError;
+                // if the blob does not exist then create it
+                if (err instanceof errcodes.ErrKindNotFound) {
+                    this.Create(path, content).then(([commit, blobMetadata]) => {
+                        resolve([commit, blobMetadata]);
+                    }).catch(err => {
+                        reject(err);
+                    });
+                }
+                // if the blob is a directory then throw an error
+                reject(err);
             });
 
         });
@@ -102,39 +85,95 @@ export default class BlobWriter implements IBlobWriter {
      * @return Promise<Commit> - details of the commit
      */
     Delete(path: string): Promise<Commit> {
-        return new Promise<Commit>(async (resolve, reject) => {
+        return new Promise<Commit>((resolve, reject) => {
 
             // create a blob reader to read blob metadata
-            let blobReader = new BlobReader({
+            const blobReader = new BlobReader({
                 axiosClient: this.axiosClient,
                 repository: this.repository
             });
 
             // retrieve the sha of existing file (if any)
-            let old_sha: string | null = null;
-            try {
-                let blobMetadata = await blobReader.GetMetadata(path);
-                old_sha = blobMetadata.sha;
-            } catch (err) {
-                // if the blob does not exist then return
-                reject(err);
-            }
-
-            // delete the blob
-            this.axiosClient.delete(`/${path}`,{
-                headers: {
-                    'Accept': GitHubRESTAPIAcceptType.JSON
-                }, 
-                data: {
-                    message: `Delete ${path}`,
-                    sha: old_sha
-                }
-            }, ).then(resp => {
-                let commit = helper.constructCommit(resp);
-                resolve(commit);
+            blobReader.GetMetadata(path).then(blobMetadata => {
+                // delete the blob
+                this.axiosClient.delete(`/${path}`, {
+                    headers: {
+                        'Accept': GitHubRESTAPIAcceptType.JSON
+                    },
+                    data: {
+                        message: `Delete ${path}`,
+                        sha: blobMetadata.sha
+                    }
+                }).then(resp => {
+                    const commit = helper.constructCommit(resp);
+                    resolve(commit);
+                }).catch(err => {
+                    const wrappedError = wrap(err);
+                    return wrappedError;
+                });
             }).catch(err => {
                 const wrappedError = wrap(err);
-                return wrappedError;
+                reject(wrappedError);
+            });
+
+        });
+    }
+
+
+
+
+    /**
+     * Create a new blob (type `file`) at given path
+     * @param path: path of the blob
+     * @param content: content to be written
+     * @throws ErrKindUnprocessableEntity if there is an existing directory at given path
+     * @return Promise<[Commit, BlobMetadata]> - metadata of the blob created & commit details
+     */
+    private Create(path: string, content: string): Promise<[Commit, BlobMetadata]> {
+        return new Promise<[Commit, BlobMetadata]>((resolve, reject) => {
+            // create a new blob
+            this.axiosClient.put(`/${path}`, {
+                message: `Create ${path}`,
+                content: Buffer.from(content).toString('base64')
+            }, {
+                headers: {
+                    'Accept': GitHubRESTAPIAcceptType.JSON
+                }
+            }).then(resp => {
+                const wrappedResponse = helper.constructCommitAndBlobMetadata(resp);
+                resolve(wrappedResponse);
+            }).catch(err => {
+                const wrappedError = wrap(err);
+                reject(wrappedError);
+            });
+        });
+    }
+
+    /**
+     * Update the content of the blob (type `file`) at given path
+     * @param path: path of the blob
+     * @param content: content to be written
+     * @param old_sha: sha of the existing blob
+     * @throws ErrKindUnprocessableEntity if there is an existing directory at given path
+     * @return Promise<[Commit, BlobMetadata]> - metadata of the blob created & commit details
+     */
+    private Update(path: string, content: string, old_sha: string): Promise<[Commit, BlobMetadata]> {
+        return new Promise<[Commit, BlobMetadata]>((resolve, reject) => {
+            // update the blob
+            this.axiosClient.put(`/${path}`, {
+                message: `Update ${path}`,
+                content: Buffer.from(content).toString('base64'),
+                sha: old_sha
+            }, {
+                headers: {
+                    'Accept': GitHubRESTAPIAcceptType.JSON
+                }
+            }).then(resp => {
+                const wrappedResponse = helper.constructCommitAndBlobMetadata(resp);
+                resolve(wrappedResponse);
+            }).catch(err => {
+                const wrappedError = wrap(err);
+                reject(wrappedError);
             });
         });
     }

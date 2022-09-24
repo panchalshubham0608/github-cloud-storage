@@ -50,7 +50,7 @@ export default class BlobReader implements IBlobReader {
                     'Accept': GitHubRESTAPIAcceptType.JSON
                 }
             }).then(resp => {
-                let [blobMetadata, err] = helpers.constructBlobMetadata(resp);
+                const [blobMetadata, err] = helpers.constructBlobMetadata(resp);
                 if (blobMetadata !== null) resolve(blobMetadata);
                 else reject(err);
             }).catch(err => {
@@ -73,7 +73,7 @@ export default class BlobReader implements IBlobReader {
                     'Accept': GitHubRESTAPIAcceptType.RAW
                 }
             }).then(resp => {
-                let [blobContent, err] = helpers.constructBlobContent(resp);
+                const [blobContent, err] = helpers.constructBlobContent(resp);
                 if (blobContent != null) resolve(blobContent);
                 else reject(err);
             }).catch(err => {
@@ -98,7 +98,7 @@ export default class BlobReader implements IBlobReader {
                     'Accept': GitHubRESTAPIAcceptType.JSON
                 }
             }).then(resp => {
-                let [blobsMetadaList, err] = helpers.constructBlobsMetadataList(resp);
+                const [blobsMetadaList, err] = helpers.constructBlobsMetadataList(resp);
                 if (blobsMetadaList !== null) resolve(blobsMetadaList);
                 else reject(err);
             }).catch(err => {

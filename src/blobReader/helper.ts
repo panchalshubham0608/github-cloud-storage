@@ -87,8 +87,8 @@ const constructBlobsMetadataList = (resp: AxiosResponse<any, any>) : [Array<Blob
     }
 
     // construct the list of blob metadata
-    let blobsMetadataList : Array<BlobMetadata> = [];
-    for (let blobMetadataItem of resp.data) {
+    const blobsMetadataList : Array<BlobMetadata> = [];
+    for (const blobMetadataItem of resp.data) {
         blobsMetadataList.push({
                 name: blobMetadataItem.name,
                 path: blobMetadataItem.path,

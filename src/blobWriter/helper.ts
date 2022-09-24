@@ -9,7 +9,7 @@ import Commit from '../common/commit';
  * @returns BlobMetadata - blob metadata
  */
 const constructBlobMetadata = (resp: AxiosResponse<any, any>): BlobMetadata => {
-    let blobMetadata: BlobMetadata = {
+    const blobMetadata: BlobMetadata = {
         name: resp.data.content.name,
         path: resp.data.content.path,
         sha: resp.data.content.sha,
@@ -31,7 +31,7 @@ const constructBlobMetadata = (resp: AxiosResponse<any, any>): BlobMetadata => {
  * @returns Commit - commit details
  */
 const constructCommit = (resp: AxiosResponse<any, any>): Commit => {
-    let commit: Commit = {
+    const commit: Commit = {
         sha: resp.data.commit.sha,
         node_id: resp.data.commit.node_id,
         url: resp.data.commit.url,
@@ -58,8 +58,8 @@ const constructCommit = (resp: AxiosResponse<any, any>): Commit => {
  * @returns [Commit, BlobMetadata] - commit details and blob metadata
  */
 const constructCommitAndBlobMetadata = (resp: AxiosResponse<any, any>): [Commit, BlobMetadata] => {
-    let commit: Commit = constructCommit(resp);
-    let blobMetadata: BlobMetadata = constructBlobMetadata(resp);
+    const commit: Commit = constructCommit(resp);
+    const blobMetadata: BlobMetadata = constructBlobMetadata(resp);
     return [commit, blobMetadata];
 }
 
