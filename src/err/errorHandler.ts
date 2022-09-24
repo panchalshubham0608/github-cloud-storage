@@ -2,8 +2,21 @@
 import GitHubCloudStorageError from "./error";
 import * as errcodes from './errcodes';
 
+/**
+ * Check if the error is already wrapped
+ * @param err  - The error to be handled
+ * @returns - true if the error is already wrapped
+ */
+function isAlreadyWrapped(err: Error): boolean {
+    if(!Object.prototype.hasOwnProperty.call(err, 'status_code')) return false;
+    if(!Object.prototype.hasOwnProperty.call(err, 'message')) return false;
+    if(!Object.prototype.hasOwnProperty.call(err, 'path')) return false;
+    return true;
+}
+
 // Handles the GitHub REST API errors and returns an appropriate error object
 export default function wrap(err: any): GitHubCloudStorageError {
+    if (isAlreadyWrapped(err)) return err;
     const status = err.response.status;
     const path = err.request.path;
     const message = err.response.data.message;

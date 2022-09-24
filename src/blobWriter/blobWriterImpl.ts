@@ -70,9 +70,10 @@ export default class BlobWriter implements IBlobWriter {
                     }).catch(err => {
                         reject(err);
                     });
+                } else {
+                    // for any other error we reject the promise
+                    reject(err);
                 }
-                // if the blob is a directory then throw an error
-                reject(err);
             });
 
         });
