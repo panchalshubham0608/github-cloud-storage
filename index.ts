@@ -2,18 +2,23 @@
 import * as blobReader from './src/blobReader'
 import * as blobWriter from './src/blobWriter';
 import * as client from './src/client';
-import * as commons from './src/common';
+import * as types from './src/common';
 import * as errors from './src/err';
 
-// create named exports
+
+/**
+ * `ghcs (github-cloud-storage)` provides a simple interface to read and write blobs to a GitHub repository.  
+ * The blobs are stored in the repository as files.  
+ * This library makes use of the GitHub API to read and write blobs.  
+ * @see https://docs.github.com/en/rest/repos/contents#get-repository-content
+ * @see https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents
+ * @see https://docs.github.com/en/rest/repos/contents#delete-a-file
+ */
 export {
     client,
     errors,
-    commons,
+    types,
     blobReader,
     blobWriter
 };
 
-
-// default export is for client
-export default client.Client;

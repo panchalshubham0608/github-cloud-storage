@@ -1,25 +1,62 @@
-// Describes the metadata of a blob
-export default interface BlobMetadata {
-    // name of the blob
+/**
+ * IBlobMetadata defines the interface for the response of the `GetMetadata` and `ListBlobs` methods of the `IBlobReader` interface.  
+ * @see https://docs.github.com/en/rest/reference/repos#get-repository-content
+ */
+export default interface IBlobMetadata {
+
+    /**
+     * the name of the blob
+     */
     readonly name: string;
-    // path of the blob relative to the repository
+
+    /**
+     * the path of the blob
+     */
     readonly path: string;
-    // sha of the blob
+
+
+    /**
+     * the sha of the blob
+     */
     readonly sha: string;
-    // size of the blob
+
+    /**
+     * the size of the blob in bytes
+     */
     readonly size: number;
-    // url of the blob
+
+    /**
+     * the url of the blob
+     */
     readonly url: string;
-    // html_url of the blob
+
+    /**
+     * the html_url of the blob
+     */
     readonly html_url: string;
-    // git_url of the blob
+
+    /**
+     * the git_url of the blob
+     */
     readonly git_url: string;
-    // download_url of the blob
+
+    /**
+     * the download_url of the blob
+     */
     readonly download_url: string;
-    // type of the blob (`file` or `dir`)
+
+    /**
+     * the type of the blob (file or dir)
+     */
     readonly blob_type: string;
-    // etag of the blob
+
+    /**
+     * the etag of the blob
+     */
     readonly etag : string | null;
-    // date the blob was last modified
+
+    /**
+     * the date of last modification of the blob
+     */
     readonly last_modified: Date | null;
 }

@@ -1,8 +1,8 @@
 // imports
 import IClient from '../../client/client';
 import Client from '../../client/clientImpl';
-import BlobMetadata from '../../common/blobMetadata';
-import BlobContent from '../blobContent';
+import IBlobMetadata from '../../common/blobMetadata';
+import IBlobContent from '../../common/blobContent';
 import * as errcodes from '../../err/errcodes';
 import 'jest';
 
@@ -63,7 +63,7 @@ describe('BlobReader', () => {
             const filename = 'file1.txt';
             const sha = '557db03de997c86a4a028e1ebd3a1ceb225be238';
             const etag = '557db03de997c86a4a028e1ebd3a1ceb225be238';
-            let metadata : BlobMetadata | null = null;
+            let metadata : IBlobMetadata | null = null;
             let error = null;
             try {
                 metadata = await blobReader.GetMetadata(path);
@@ -140,7 +140,7 @@ describe('BlobReader', () => {
             const size = 12;
             const body = 'Hello World\n';
             const etag = '557db03de997c86a4a028e1ebd3a1ceb225be238';
-            let blobContent : BlobContent | null = null;
+            let blobContent : IBlobContent | null = null;
             let error = null;
             try {
                 blobContent = await blobReader.GetContent(path);
@@ -201,7 +201,7 @@ describe('BlobReader', () => {
 
         it('ListBlobs should return correct list of blobs for a directory', async () => {
             const path = 'files';
-            let blobs : BlobMetadata[] | null = null;
+            let blobs : IBlobMetadata[] | null = null;
             let error = null;
             try {
                 blobs = await blobReader.ListBlobs(path);

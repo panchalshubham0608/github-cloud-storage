@@ -1,9 +1,9 @@
 // imports
 import IClient from '../../client/client';
 import Client from '../../client/clientImpl';
-import Commit from '../../common/commit';
-import BlobMetadata from '../../common/blobMetadata';
-import BlobContent from '../../blobReader/blobContent';
+import ICommit from '../../common/commit';
+import IBlobMetadata from '../../common/blobMetadata';
+import IBlobContent from '../../common/blobContent';
 import * as errcodes from '../../err/errcodes';
 import 'jest';
 
@@ -53,8 +53,8 @@ describe('BlobWriter', () => {
             const path = 'blobs/file1.txt';
             const filename = 'file1.txt';
             const content = 'Hello World\nThis is a line.\n';
-            let commit : Commit | null = null;
-            let blobMetadata : BlobMetadata | null = null;
+            let commit : ICommit | null = null;
+            let blobMetadata : IBlobMetadata | null = null;
             let error = null;
 
             try {
@@ -89,7 +89,7 @@ describe('BlobWriter', () => {
             expect(blobMetadata).toHaveProperty('git_url');
             expect(blobMetadata).toHaveProperty('download_url');
 
-            let blobContent : BlobContent | null = null;
+            let blobContent : IBlobContent | null = null;
             try {
                 blobContent = await blobReader.GetContent(path);
             } catch (err) {
@@ -105,8 +105,8 @@ describe('BlobWriter', () => {
             const path = 'blobs/file1.txt';
             const filename = 'file1.txt';
             const content = 'Hello World\nThis is a line.\nThis is another line.\n';
-            let commit : Commit | null = null;
-            let blobMetadata : BlobMetadata | null = null;
+            let commit : ICommit | null = null;
+            let blobMetadata : IBlobMetadata | null = null;
             let error = null;
 
             try {
@@ -141,7 +141,7 @@ describe('BlobWriter', () => {
             expect(blobMetadata).toHaveProperty('git_url');
             expect(blobMetadata).toHaveProperty('download_url');
 
-            let blobContent : BlobContent | null = null;
+            let blobContent : IBlobContent | null = null;
             try {
                 blobContent = await blobReader.GetContent(path);
             } catch (err) {
@@ -196,8 +196,8 @@ describe('BlobWriter', () => {
             const path = 'blobs/file1.txt';
             const content = 'Hello World\nThis is a line.\n';
 
-            let commit : Commit | null = null;
-            let blobMetadata : BlobMetadata | null = null;
+            let commit : ICommit | null = null;
+            let blobMetadata : IBlobMetadata | null = null;
             let error = null;
             
             try {

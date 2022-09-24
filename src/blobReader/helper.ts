@@ -1,7 +1,7 @@
 // imports
-import BlobContent from "./blobContent";
-import BlobMetadata from '../common/blobMetadata';
-import GitHubCloudStorageError from '../err/error';
+import IBlobContent from "../common/blobContent";
+import IBlobMetadata from '../common/blobMetadata';
+import IGitHubCloudStorageError from '../err/error';
 import * as errcodes from '../err/errcodes';
 import { AxiosResponse } from 'axios';
 
@@ -10,13 +10,13 @@ import { AxiosResponse } from 'axios';
  * If the blob at given path is found to be a `directory` 
  * then returns an error of ErrKindUnprocessableEntityErrKindUnprocessableEntity
  * If the blob at given path is found to be a `file`
- * then returns BlobContent object
+ * then returns IBlobContent object
  * 
  * @param resp The response received from the HTTP request
  * 
- * @returns [BlobContent, GitHubCloudStorageError] 
+ * @returns [IBlobContent, IGitHubCloudStorageError] 
  */
-const constructBlobContent = (resp : AxiosResponse<any, any>) : [BlobContent | null, GitHubCloudStorageError | null]  => {
+const constructIBlobContent = (resp : AxiosResponse<any, any>) : [IBlobContent | null, IGitHubCloudStorageError | null]  => {
     // check if the blob at given path is a directory
     if (resp.data instanceof Array) {
         return [null, new errcodes.ErrKindUnprocessableEntity(
@@ -38,12 +38,12 @@ const constructBlobContent = (resp : AxiosResponse<any, any>) : [BlobContent | n
  * If the blob at given path is found to be a `directory`
  * then returns an error of ErrKindUnprocessableEntity
  * If the blob at given path is found to be a `file`
- * then returns BlobMetadata object
+ * then returns IBlobMetadata object
  * 
  * @param resp The response received from the HTTP request
- * @returns [BlobMetadata, GitHubCloudStorageError]
+ * @returns [IBlobMetadata, IGitHubCloudStorageError]
  */
-const constructBlobMetadata = (resp: AxiosResponse<any, any>) : [BlobMetadata | null, GitHubCloudStorageError | null] => {
+const constructIBlobMetadata = (resp: AxiosResponse<any, any>) : [IBlobMetadata | null, IGitHubCloudStorageError | null] => {
     // check if the blob at given path is a directory
     if (resp.data instanceof Array) {
         return [null, new errcodes.ErrKindUnprocessableEntity(
@@ -72,12 +72,12 @@ const constructBlobMetadata = (resp: AxiosResponse<any, any>) : [BlobMetadata | 
  * If the blob at given path is found to be a `file`
  * then returns an error of ErrKindUnprocessableEntity
  * If the blob at given path is found to be a `directory`
- * then returns Array<BlobMetadata> containing the list of metadata of each blobs
+ * then returns Array<IBlobMetadata> containing the list of metadata of each blobs
  * 
  * @param resp The response received from the HTTP request
- * @returns [Array<BlobMetadata>, GitHubCloudStorageError]
+ * @returns [Array<IBlobMetadata>, IGitHubCloudStorageError]
  */
-const constructBlobsMetadataList = (resp: AxiosResponse<any, any>) : [Array<BlobMetadata> | null, GitHubCloudStorageError | null] => {
+const constructBlobsMetadataList = (resp: AxiosResponse<any, any>) : [Array<IBlobMetadata> | null, IGitHubCloudStorageError | null] => {
     // check if the blob at given path is a directory
     if (!(resp.data instanceof Array)) {
         return [null, new errcodes.ErrKindUnprocessableEntity(
@@ -87,7 +87,7 @@ const constructBlobsMetadataList = (resp: AxiosResponse<any, any>) : [Array<Blob
     }
 
     // construct the list of blob metadata
-    const blobsMetadataList : Array<BlobMetadata> = [];
+    const blobsMetadataList : Array<IBlobMetadata> = [];
     for (const blobMetadataItem of resp.data) {
         blobsMetadataList.push({
                 name: blobMetadataItem.name,
@@ -108,7 +108,7 @@ const constructBlobsMetadataList = (resp: AxiosResponse<any, any>) : [Array<Blob
 
 // Export the helper function
 export {
-    constructBlobContent,
-    constructBlobMetadata,
+    constructIBlobContent,
+    constructIBlobMetadata,
     constructBlobsMetadataList
 };

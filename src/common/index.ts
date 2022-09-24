@@ -1,9 +1,11 @@
 // imports
-import BlobMetadata from './blobMetadata';
-import Commit from './commit';
+import IBlobMetadata from './blobMetadata';
+import ICommit from './commit';
+import IBlobContent from './blobContent';
 
 // export items
 export {
-    BlobMetadata,
-    Commit
+    IBlobMetadata,
+    IBlobContent,
+    ICommit
 };

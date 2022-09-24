@@ -1,9 +1,9 @@
 // imports
 import BlobReader from './blobReaderImpl';
-import BlobContent from './blobContent';
+import IBlobReader from './blobReader';
 
 // exports
 export {
     BlobReader,
-    BlobContent
+    IBlobReader,
 };

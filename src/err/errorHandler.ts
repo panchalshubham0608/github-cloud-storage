@@ -1,5 +1,5 @@
 // imports
-import GitHubCloudStorageError from "./error";
+import IGitHubCloudStorageError from "./error";
 import * as errcodes from './errcodes';
 
 /**
@@ -15,7 +15,7 @@ function isAlreadyWrapped(err: Error): boolean {
 }
 
 // Handles the GitHub REST API errors and returns an appropriate error object
-export default function wrap(err: any): GitHubCloudStorageError {
+export default function wrap(err: any): IGitHubCloudStorageError {
     if (isAlreadyWrapped(err)) return err;
     const status = err.response.status;
     const path = err.request.path;

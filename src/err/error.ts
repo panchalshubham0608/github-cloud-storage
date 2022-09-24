@@ -1,9 +1,19 @@
-// Defines a generic Error for the library
-export default interface GitHubCloudStorageError {
-    // HTTP status code associated with this error
+/**
+ * Defines a generic Error for the library
+ */
+export default interface IGitHubCloudStorageError {
+    /**
+     * The HTTP status code
+     */
     status_code: number;
-    // message associated with this error
+
+    /**
+     * The error message
+     */
     message: string;
-    // path for which request was made when this error encountered
+
+    /**
+     * The path of the blob for which the error occurred
+     */
     path: string;
 }

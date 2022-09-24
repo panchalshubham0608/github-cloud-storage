@@ -2,33 +2,35 @@
 import IBlobReader from "../blobReader/blobReader";
 import IBlobWriter from '../blobWriter/blobWriter';
 
-// Defines the prototype for Client
+/**
+ * IClient defines the interface for the GitHub Cloud Storage client.
+ */
 export default interface IClient {
 
+
     /**
-     * Retrieve the name of the respository for which the client is created
-     * @return string: name of the repository
+     * Retrieve a `lazy` blob reader that implements IBlobReader to facilitate reading of blobs.  
+     * The reading of blobs is backed by the GitHub API.  
+     * https://docs.github.com/en/rest/repos/contents#get-repository-content
      */
-     RepositoryName(): string;
+     NewBlobReader(): IBlobReader;
+
+    /**
+     * Retrieve a `lazy` blob writer that implements IBlobWriter to facilitate writing of blobs.  
+     * The writing of blobs is backed by the GitHub API.  
+     * https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents  
+     * https://docs.github.com/en/rest/repos/contents#delete-a-file  
+     */
+    NewBlobWriter(): IBlobWriter;
 
     /**
      * Retrieve the name of the owner for which the client is created
-     * @return string: name of the owner of the repository
      */
      OwnerName(): string;
 
-    /**
-     * Retrieve an instance of BlobReader to facilitate reading of blobs
-     * https://docs.github.com/en/rest/repos/contents#get-repository-content
-     * @return BlobReader
+     /**
+     * Retrieve the name of the respository for which the client is created
      */
-    NewBlobReader(): IBlobReader;
+     RepositoryName(): string;
 
-    /**
-     * Retrieve an instance of BlobWriter to facilitate writing of blobs
-     * https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents
-     * https://docs.github.com/en/rest/repos/contents#delete-a-file
-     * @return BlobWriter
-     */
-    NewBlobWriter(): IBlobWriter;
 }

@@ -6,6 +6,7 @@ import { defaults } from 'jest-config';
 const config: Config.InitialOptions = {
     preset: 'ts-jest',
     testMatch: [...defaults.testMatch, '**/*.test.ts'],
+    modulePathIgnorePatterns: ['<rootDir>/dist/'],
     setupFiles: ['./jest.setup.ts']
 };
 

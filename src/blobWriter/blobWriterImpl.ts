@@ -2,20 +2,34 @@
 import { Axios } from "axios";
 import IBlobWriter from './blobWriter';
 import BlobReader from '../blobReader/blobReaderImpl';
-import BlobMetadata from '../common/blobMetadata';
-import Commit from '../common/commit';
+import IBlobMetadata from '../common/blobMetadata';
+import ICommit from '../common/commit';
 import * as errcodes from '../err/errcodes';
 import GitHubRESTAPIAcceptType from "../util/acceptReponse";
 import wrap from "../err/errorHandler";
 import * as helper from './helper';
 
-// configuration to create a new `BlobReader`
-export interface IBlobReaderParams {
+
+/**
+ * `IBlobWriterParams` defines the parameters for creating a `BlobWriter` object.
+ * @hidden
+ * @param repositoryName - name of the repository
+ * @param axiosClient  - axios client to be used for making API calls
+ */
+export interface IBlobWriterParams {
     axiosClient: Axios;
     repository: string;
 }
 
-// Implement `IBlobWriter`
+/**
+ * `BlobWriter` implements the `IBlobWriter` interface.  
+ * The BlobWriter facilitates writing of blobs to a repository.  
+ * The writer is lazy and does not write the blob content unless requested.  
+ * The writing of blobs is backed by the GitHub API.  
+ * @see https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents
+ * @see https://docs.github.com/en/rest/repos/contents#delete-a-file
+ * @hidden
+ */
 export default class BlobWriter implements IBlobWriter {
 
     // parivate properties
@@ -23,7 +37,7 @@ export default class BlobWriter implements IBlobWriter {
     private axiosClient: Axios;
 
     // constructor
-    constructor(params: IBlobReaderParams) {
+    constructor(params: IBlobWriterParams) {
         // initialize properties
         this.axiosClient = params.axiosClient;
         this.repository = params.repository;
@@ -43,10 +57,10 @@ export default class BlobWriter implements IBlobWriter {
      * @param path: path of the blob
      * @param content: content to be written
      * @throws ErrKindUnprocessableEntity if there is an existing directory at given path
-     * @return Promise<[Commit, BlobMetadata]> - metadata of the blob created & commit details
+     * @return Promise<[ICommit, IBlobMetadata]> - metadata of the blob created & commit details
      */
-    Write(path: string, content: string): Promise<[Commit, BlobMetadata]> {
-        return new Promise<[Commit, BlobMetadata]>((resolve, reject) => {
+    Write(path: string, content: string): Promise<[ICommit, IBlobMetadata]> {
+        return new Promise<[ICommit, IBlobMetadata]>((resolve, reject) => {
 
             // create a blob reader to read blob metadata
             const blobReader = new BlobReader({
@@ -83,10 +97,10 @@ export default class BlobWriter implements IBlobWriter {
      * Delete the blob (type `file`) at given path
      * @param path: path of the blob to be deleted
      * @throws ErrKindUnprocessableEntity if the blob is a directory
-     * @return Promise<Commit> - details of the commit
+     * @return Promise<ICommit> - details of the commit
      */
-    Delete(path: string): Promise<Commit> {
-        return new Promise<Commit>((resolve, reject) => {
+    Delete(path: string): Promise<ICommit> {
+        return new Promise<ICommit>((resolve, reject) => {
 
             // create a blob reader to read blob metadata
             const blobReader = new BlobReader({
@@ -106,7 +120,7 @@ export default class BlobWriter implements IBlobWriter {
                         sha: blobMetadata.sha
                     }
                 }).then(resp => {
-                    const commit = helper.constructCommit(resp);
+                    const commit = helper.constructICommit(resp);
                     resolve(commit);
                 }).catch(err => {
                     const wrappedError = wrap(err);
@@ -128,10 +142,10 @@ export default class BlobWriter implements IBlobWriter {
      * @param path: path of the blob
      * @param content: content to be written
      * @throws ErrKindUnprocessableEntity if there is an existing directory at given path
-     * @return Promise<[Commit, BlobMetadata]> - metadata of the blob created & commit details
+     * @return Promise<[ICommit, IBlobMetadata]> - metadata of the blob created & commit details
      */
-    private Create(path: string, content: string): Promise<[Commit, BlobMetadata]> {
-        return new Promise<[Commit, BlobMetadata]>((resolve, reject) => {
+    private Create(path: string, content: string): Promise<[ICommit, IBlobMetadata]> {
+        return new Promise<[ICommit, IBlobMetadata]>((resolve, reject) => {
             // create a new blob
             this.axiosClient.put(`/${path}`, {
                 message: `Create ${path}`,
@@ -141,7 +155,7 @@ export default class BlobWriter implements IBlobWriter {
                     'Accept': GitHubRESTAPIAcceptType.JSON
                 }
             }).then(resp => {
-                const wrappedResponse = helper.constructCommitAndBlobMetadata(resp);
+                const wrappedResponse = helper.constructICommitAndIBlobMetadata(resp);
                 resolve(wrappedResponse);
             }).catch(err => {
                 const wrappedError = wrap(err);
@@ -156,10 +170,10 @@ export default class BlobWriter implements IBlobWriter {
      * @param content: content to be written
      * @param old_sha: sha of the existing blob
      * @throws ErrKindUnprocessableEntity if there is an existing directory at given path
-     * @return Promise<[Commit, BlobMetadata]> - metadata of the blob created & commit details
+     * @return Promise<[ICommit, IBlobMetadata]> - metadata of the blob created & commit details
      */
-    private Update(path: string, content: string, old_sha: string): Promise<[Commit, BlobMetadata]> {
-        return new Promise<[Commit, BlobMetadata]>((resolve, reject) => {
+    private Update(path: string, content: string, old_sha: string): Promise<[ICommit, IBlobMetadata]> {
+        return new Promise<[ICommit, IBlobMetadata]>((resolve, reject) => {
             // update the blob
             this.axiosClient.put(`/${path}`, {
                 message: `Update ${path}`,
@@ -170,7 +184,7 @@ export default class BlobWriter implements IBlobWriter {
                     'Accept': GitHubRESTAPIAcceptType.JSON
                 }
             }).then(resp => {
-                const wrappedResponse = helper.constructCommitAndBlobMetadata(resp);
+                const wrappedResponse = helper.constructICommitAndIBlobMetadata(resp);
                 resolve(wrappedResponse);
             }).catch(err => {
                 const wrappedError = wrap(err);

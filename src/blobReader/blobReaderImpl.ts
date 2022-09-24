@@ -3,24 +3,53 @@ import { Axios } from "axios";
 import GitHubRESTAPIAcceptType from "../util/acceptReponse";
 import IBlobReader from "./blobReader";
 import wrap from "../err/errorHandler";
-import BlobContent from "./blobContent";
-import BlobMetadata from "../common/blobMetadata";
+import IBlobContent from "../common/blobContent";
+import IBlobMetadata from "../common/blobMetadata";
 import * as helpers from './helper';
 
-// configuration to create a new `BlobReader`
+
+/**
+ * IBlobReaderParams defines the parameters for creating a new `BlobReader`.  
+ * The BlobReader should not be created directly, instead use the `NewBlobReader` method of the `Client` class.
+ * @hidden
+ */
 export interface IBlobReaderParams {
-    axiosClient: Axios;
-    repository: string;
+    /**
+     * the axios instance to use for the HTTP requests
+     */
+    readonly axiosClient: Axios;
+
+    /**
+     * the repository from which the blob reading should be done
+     */
+    readonly repository: string;
 }
 
-// implement `BlobReader`
+/**
+ * BlobReader implements the `IBlobReader` interface.  
+ * BlobReader is a lazy reader that facilitates reading of blobs from a repository.  
+ * The BlobReader should not be created directly, instead use the `NewBlobReader` method of the `Client` class.
+ * @internal
+ * @hidden
+ */
 export default class BlobReader implements IBlobReader {
 
-    // parivate properties
+    /**
+     * reposirtory for which the blob reader is created
+     */
     private repository: string;
+    
+    /**
+     * axios client to be used for making requests
+     */
     private axiosClient: Axios;
 
-    // constructor
+    /**
+     * Creates an instance of BlobReader.
+     * @param params - parameters for creating a new `BlobReader`
+     * @param params.axiosClient - axios client to be used for making requests
+     * @param params.repositoryName - name of the repository
+     */
     constructor(params: IBlobReaderParams) {
         // initialize properties
         this.axiosClient = params.axiosClient;
@@ -29,7 +58,6 @@ export default class BlobReader implements IBlobReader {
 
     /**
      * Retrieve the name of the respository for which the blob reader is created
-     * @return string: name of the repository
      */
     RepositoryName(): string {
         return this.repository;
@@ -38,19 +66,18 @@ export default class BlobReader implements IBlobReader {
 
 
     /**
-     * Retrieve the metadata of the blob for which the blob reader is created
+     * Retrieve the metadata of the blob at given path.
      * @param path - path of the file for which metadata is to be retrieved
      * @throws ErrKindUnprocessableEntity if the blob at given path is not of type `file`
-     * @return BlobMetadata - the metadata of the blob
      */
-     GetMetadata(path: string): Promise<BlobMetadata> {
-        return new Promise<BlobMetadata>((resolve, reject) => {
+     GetMetadata(path: string): Promise<IBlobMetadata> {
+        return new Promise<IBlobMetadata>((resolve, reject) => {
             this.axiosClient.get(`/${path}`, {
                 headers: {
                     'Accept': GitHubRESTAPIAcceptType.JSON
                 }
             }).then(resp => {
-                const [blobMetadata, err] = helpers.constructBlobMetadata(resp);
+                const [blobMetadata, err] = helpers.constructIBlobMetadata(resp);
                 if (blobMetadata !== null) resolve(blobMetadata);
                 else reject(err);
             }).catch(err => {
@@ -61,19 +88,18 @@ export default class BlobReader implements IBlobReader {
     }
     
     /**
-     * Retrieve the content of the blob for which the blob reader is created
+     * Retrieve the content of the blob at given path.  
      * @param path - path of the file for which content is to be retrieved
      * @throws ErrKindUnprocessableEntity if the blob at given path is not of type `file`
-     * @return BlobMetadata - the metadata of the blob
      */
-     GetContent(path: string): Promise<BlobContent> {
-        return new Promise<BlobContent>((resolve, reject) => {
+     GetContent(path: string): Promise<IBlobContent> {
+        return new Promise<IBlobContent>((resolve, reject) => {
             this.axiosClient.get(`/${path}`, {
                 headers: {
                     'Accept': GitHubRESTAPIAcceptType.RAW
                 }
             }).then(resp => {
-                const [blobContent, err] = helpers.constructBlobContent(resp);
+                const [blobContent, err] = helpers.constructIBlobContent(resp);
                 if (blobContent != null) resolve(blobContent);
                 else reject(err);
             }).catch(err => {
@@ -86,13 +112,12 @@ export default class BlobReader implements IBlobReader {
 
 
     /**
-     * Retrieve the list of blob metadata for which the blob reader is created
+     * Retrieve the list of blob metadata for directory at given path.
      * @param path - path of the directory for which the blobs are to be listed
      * @throws ErrKindUnprocessableEntity if the blob at given path is not of type `directory`
-     * @return Array<BlobMetadata> - list of metadata of blobs under given directory
      */
-    ListBlobs(path: string): Promise<Array<BlobMetadata>> {
-        return new Promise<Array<BlobMetadata>>((resolve, reject) => {
+    ListBlobs(path: string): Promise<Array<IBlobMetadata>> {
+        return new Promise<Array<IBlobMetadata>>((resolve, reject) => {
             this.axiosClient.get(`/${path}`, {
                 headers: {
                     'Accept': GitHubRESTAPIAcceptType.JSON

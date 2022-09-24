@@ -1,37 +1,43 @@
 // imports
-import BlobMetadata from "../common/blobMetadata"
-import BlobContent from "./blobContent"
+import IBlobMetadata from "../common/blobMetadata"
+import IBlobContent from "../common/blobContent"
 
-// `IBlobReader` allows you to read contents of a blob
+
+/**
+ * `IBlobReader` defines the interface for a blob reader.  
+ * The BlobReader facilitates reading of blobs from a repository.  
+ * The reader is lazy and does not read the blob content unless requested.  
+ * The reading of blobs is backed by the GitHub API.  
+ * https://docs.github.com/en/rest/repos/contents#get-repository-content
+ */
 export default interface IBlobReader {
 
     /**
-     * Retrieve the name of the respository for which the blob reader is created
-     * @return string: name of the repository
+     * Retrieve the content of the blob at given path.  
+     * The content is returned as a `Promise` that resolves to `IBlobContent` object.  
+     * @param path - path of the file for which content is to be retrieved.  
+     * @throws ErrKindUnprocessableEntity - if the path does not correspond to a `file`.
      */
-    RepositoryName(): string
-
+     GetContent(path: string): Promise<IBlobContent>
+     
     /**
-     * Retrieve the metadata of the blob for which the blob reader is created
+     * Retrieve the metadata of the blob at given path.
      * @param path - path of the file for which metadata is to be retrieved
-     * @throws ErrKindUnprocessableEntity if the blob at given path is not of type `file`
-     * @return BlobMetadata - the metadata of the blob
+     * @throws ErrKindUnprocessableEntity - if the path does not correspond to a `file`.
      */
-    GetMetadata(path: string): Promise<BlobMetadata>
+    GetMetadata(path: string): Promise<IBlobMetadata>
+
 
     /**
-     * Retrieve the content of the blob for which the blob reader is created
-     * @param path - path of the file for which content is to be retrieved
-     * @throws ErrKindUnprocessableEntity if the blob at given path is not of type `file`
-     * @return BlobMetadata - the metadata of the blob
-     */
-    GetContent(path: string): Promise<BlobContent>
-
-    /**
-     * Retrieve the list of blob metadata for which the blob reader is created
+     * Retrieve the list of blob metadata for directory at given path.
      * @param path - path of the directory for which the blobs are to be listed
-     * @throws ErrKindUnprocessableEntity if the blob at given path is not of type `directory`
-     * @return Array<BlobMetadata> - list of metadata of blobs under given directory
+     * @throws ErrKindUnprocessableEntity - if the path does not correspond to a `directory`.
      */
-    ListBlobs(path: string): Promise<Array<BlobMetadata>>
+    ListBlobs(path: string): Promise<Array<IBlobMetadata>>
+
+
+    /**
+     * Retrieve the name of the respository for which the blob reader is created
+     */
+     RepositoryName(): string
 }

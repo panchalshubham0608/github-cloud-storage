@@ -1,15 +1,15 @@
 // imports
 import { AxiosResponse } from 'axios';
-import BlobMetadata from "../common/blobMetadata"
-import Commit from '../common/commit';
+import IBlobMetadata from "../common/blobMetadata"
+import ICommit from '../common/commit';
 
 /**
- * Construct the `BlobMetadata` object from the response of the GitHub REST API
+ * Construct the `IBlobMetadata` object from the response of the GitHub REST API
  * @param resp - response from the GitHub REST API
- * @returns BlobMetadata - blob metadata
+ * @returns IBlobMetadata - blob metadata
  */
-const constructBlobMetadata = (resp: AxiosResponse<any, any>): BlobMetadata => {
-    const blobMetadata: BlobMetadata = {
+const constructIBlobMetadata = (resp: AxiosResponse<any, any>): IBlobMetadata => {
+    const blobMetadata: IBlobMetadata = {
         name: resp.data.content.name,
         path: resp.data.content.path,
         sha: resp.data.content.sha,
@@ -28,10 +28,10 @@ const constructBlobMetadata = (resp: AxiosResponse<any, any>): BlobMetadata => {
 /**
  * Construct the commit object from the response of the GitHub REST API
  * @param resp - response from the GitHub REST API
- * @returns Commit - commit details
+ * @returns ICommit - commit details
  */
-const constructCommit = (resp: AxiosResponse<any, any>): Commit => {
-    const commit: Commit = {
+const constructICommit = (resp: AxiosResponse<any, any>): ICommit => {
+    const commit: ICommit = {
         sha: resp.data.commit.sha,
         node_id: resp.data.commit.node_id,
         url: resp.data.commit.url,
@@ -52,21 +52,21 @@ const constructCommit = (resp: AxiosResponse<any, any>): Commit => {
 };
 
 /**
- * Construct the `BlobMetadata` object from the response of the GitHub REST API
- * and `Commit` object from the response of the GitHub REST API
+ * Construct the `IBlobMetadata` object from the response of the GitHub REST API
+ * and `ICommit` object from the response of the GitHub REST API
  * @param resp - response from the GitHub REST API
- * @returns [Commit, BlobMetadata] - commit details and blob metadata
+ * @returns [ICommit, IBlobMetadata] - commit details and blob metadata
  */
-const constructCommitAndBlobMetadata = (resp: AxiosResponse<any, any>): [Commit, BlobMetadata] => {
-    const commit: Commit = constructCommit(resp);
-    const blobMetadata: BlobMetadata = constructBlobMetadata(resp);
+const constructICommitAndIBlobMetadata = (resp: AxiosResponse<any, any>): [ICommit, IBlobMetadata] => {
+    const commit: ICommit = constructICommit(resp);
+    const blobMetadata: IBlobMetadata = constructIBlobMetadata(resp);
     return [commit, blobMetadata];
 }
 
 
 // exports the items
 export {
-    constructBlobMetadata,
-    constructCommit,
-    constructCommitAndBlobMetadata
+    constructIBlobMetadata,
+    constructICommit,
+    constructICommitAndIBlobMetadata
 };
