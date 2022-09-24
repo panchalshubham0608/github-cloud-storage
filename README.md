@@ -14,7 +14,7 @@ $ npm install ghcs
 ```
 
 ## Documentation
-A complete guide for this library can be found [here](./docs/index.html)
+A complete guide for this library can be found [here](https://panchalshubham0608.github.io/github-cloud-storage/)
 
 ## Examples  
 Here are a few examples that outlines the usage of the `ghcs` library.  
