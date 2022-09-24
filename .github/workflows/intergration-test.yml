@@ -6,9 +6,9 @@ on:
       - main
   pull_request:
 env:
-  PAT: ${{ secrets.PAT }}
-  ANOTHER_PAT: ${{ secrets.ANOTHER_PAT }}
-  OWNER: ${{ secrets.OWNER }}
+  OWNER_NAME: ${{ secrets.OWNER_NAME }}
+  OWNER_REPO: ${{ secrets.OWNER_REPO }}
+  OWNER_TOKEN: ${{ secrets.OWNER_TOKEN }}
 jobs:
   test:
     runs-on: ubuntu-latest
