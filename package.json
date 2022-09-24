@@ -1,6 +1,6 @@
 {
   "name": "ghcs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Library to interact with GitHub repositories as a cloud-storage service!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
