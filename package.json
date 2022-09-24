@@ -1,6 +1,6 @@
 {
-  "name": "@panchalshubham0608/github-cloud-storage",
-  "version": "1.2.0",
+  "name": "ghcs",
+  "version": "1.0.0",
   "description": "Library to interact with GitHub repositories as a cloud-storage service!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
