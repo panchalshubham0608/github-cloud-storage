@@ -1,4 +1,7 @@
 # ghcs
+![CI](https://github.com/panchalshubham0608/github-cloud-storage/actions/workflows/intergration-test.yml/badge.svg)
+![Lint](https://github.com/panchalshubham0608/github-cloud-storage/actions/workflows/lint.yml/badge.svg)
+
 `ghcs (github-cloud-storage)` provides a simple interface to read and write blobs to a GitHub repository. The blobs are stored in the repository as files. This library makes use of the GitHub API to read and write blobs.   
 
 Here are the references to underlying GitHub API: 
