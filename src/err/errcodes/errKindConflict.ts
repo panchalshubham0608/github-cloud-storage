@@ -1,20 +1,18 @@
 // imports
-import IGitHubCloudStorageError from '../error';
 import * as http from 'http-status-codes';
+import GHCSErrorImpl from '../errorImpl';
+import { GHCSErrorImplParams } from '../errorImpl';
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
+ * @type{ErrKindConflict} defines the error for HTTP status code 409
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
  */
-export default class ErrKindConflict implements IGitHubCloudStorageError {
-    readonly status_code: number = http.StatusCodes.CONFLICT;
-    readonly message: string;
-    readonly path: string;
-
-    /**
-     * @hidden
-     */
-    constructor(message: string, path: string) {
-        this.message = message;
-        this.path = path;
+export default class ErrKindConflict extends GHCSErrorImpl {
+    constructor(params: GHCSErrorImplParams) {
+        super({
+            ...params,
+            name: 'GHCSError::ErrKindConflict',
+            status_code: http.StatusCodes.CONFLICT,
+        });
     }
 }

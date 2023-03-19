@@ -1,21 +1,18 @@
 // imports
-import IGitHubCloudStorageError from '../error';
 import * as http from 'http-status-codes';
+import GHCSErrorImpl from '../errorImpl';
+import { GHCSErrorImplParams } from '../errorImpl';
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+ * @type{ErrKindBadRequest} defines the error for HTTP status code 400
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
  */
-export default class ErrKindBadRequest implements IGitHubCloudStorageError {
-
-    readonly status_code: number = http.StatusCodes.BAD_REQUEST;
-    readonly message: string;
-    readonly path: string;
-
-    /**
-     * @hidden
-     */
-    constructor(message: string, path: string) {
-        this.message = message;
-        this.path = path;
+export default class ErrKindBadRequest extends GHCSErrorImpl {
+    constructor(params: GHCSErrorImplParams) {
+        super({
+            ...params,
+            name: 'GHCSError::ErrKindBadRequest',
+            status_code: http.StatusCodes.BAD_REQUEST,
+        });
     }
 }

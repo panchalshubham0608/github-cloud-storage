@@ -1,20 +1,18 @@
 // imports
-import IGitHubCloudStorageError from '../error';
 import * as http from 'http-status-codes';
+import GHCSErrorImpl from '../errorImpl';
+import { GHCSErrorImplParams } from '../errorImpl';
 
 /**
- * https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+ * @type{ErrKindUnauthorized} defines the error for HTTP status code 401
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
  */
-export default class ErrKindUnauthorized implements IGitHubCloudStorageError {
-    readonly status_code: number = http.StatusCodes.UNAUTHORIZED;
-    readonly message: string;
-    readonly path: string;
-
-    /**
-     * @hidden
-     */
-    constructor(message: string, path: string) {
-        this.message = message;
-        this.path = path;
+export default class ErrKindUnauthorized extends GHCSErrorImpl {
+    constructor(params: GHCSErrorImplParams) {
+        super({
+            ...params,
+            name: 'GHCSError::ErrKindUnauthorized',
+            status_code: http.StatusCodes.UNAUTHORIZED,
+        });
     }
 }

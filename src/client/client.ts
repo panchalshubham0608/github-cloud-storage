@@ -1,35 +1,42 @@
 // imports
-import IBlobReader from "../blobReader/blobReader";
-import IBlobWriter from '../blobWriter/blobWriter';
+import BlobReader from "../blobReader/blobReader";
+// import BlobWriter from '../blobWriter/blobWriter';
 
 /**
- * IClient defines the interface for the GitHub Cloud Storage client.
+ * @type{Client} defines the interface for the GitHub Cloud Storage client.
+ * The client is used to create a `lazy` blob reader and blob writer
+ * that can be used to read and write blobs from a repository.
  */
-export default interface IClient {
-
-
-    /**
-     * Retrieve a `lazy` blob reader that implements IBlobReader to facilitate reading of blobs.  
-     * The reading of blobs is backed by the GitHub API.  
-     * https://docs.github.com/en/rest/repos/contents#get-repository-content
-     */
-     NewBlobReader(): IBlobReader;
+export default interface Client {
 
     /**
-     * Retrieve a `lazy` blob writer that implements IBlobWriter to facilitate writing of blobs.  
-     * The writing of blobs is backed by the GitHub API.  
-     * https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents  
-     * https://docs.github.com/en/rest/repos/contents#delete-a-file  
+     * Retrieve a `lazy` blob reader that implements @type{BlobReader} to facilitate reading of blobs.
+     * The reading of blobs is backed by the GitHub API.
+     * To know more about the GitHub API, refer to the following links:
+     * @see https://docs.github.com/en/rest/repos/contents#get-repository-content
+     * @returns BlobReader
      */
-    NewBlobWriter(): IBlobWriter;
+    NewBlobReader(): BlobReader;
+
+    // /**
+    //  * Retrieve a `lazy` blob writer that implements @type{BlobWriter} to facilitate writing of blobs.
+    //  * The writing of blobs is backed by the GitHub API.
+    //  * To know more about the GitHub API, refer to the following links:
+    //  * @see https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents
+    //  * @see https://docs.github.com/en/rest/repos/contents#delete-a-file
+    //  * @returns BlobWriter
+    //  */
+    // NewBlobWriter(): BlobWriter;
 
     /**
      * Retrieve the name of the owner for which the client is created
+     * @returns name of the owner
      */
      OwnerName(): string;
 
      /**
      * Retrieve the name of the respository for which the client is created
+     * @returns name of the repository
      */
      RepositoryName(): string;
 

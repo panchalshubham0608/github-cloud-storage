@@ -1,11 +1,11 @@
 // imports
-import Client from './clientImpl';
-import IClient from './client';
-import IClientConfig from './clientConfig';
+import ClientImpl from './clientImpl';
+import Client from './client';
+import ClientConfig from './clientConfig';
 
 // exports
 export {
-    IClient,
-    IClientConfig,
-    Client
+    Client,
+    ClientConfig,
+    ClientImpl,
 };

@@ -1,7 +1,7 @@
 // imports
 import { AxiosResponse } from 'axios';
-import IBlobMetadata from "../common/blobMetadata"
-import ICommit from '../common/commit';
+import IBlobMetadata from "../types/blobMetadata"
+import ICommit from '../types/commit';
 
 /**
  * Construct the `IBlobMetadata` object from the response of the GitHub REST API
@@ -18,7 +18,7 @@ const constructIBlobMetadata = (resp: AxiosResponse<any, any>): IBlobMetadata =>
         html_url: resp.data.content.html_url,
         git_url: resp.data.content.git_url,
         download_url: resp.data.content.download_url,
-        blob_type: resp.data.content.type,
+        type: resp.data.content.type,
         etag: null,
         last_modified: null,
     }

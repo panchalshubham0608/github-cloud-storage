@@ -1,6 +1,6 @@
 // imports
-import IGitHubCloudStorageError from './error';
-import { 
+import GHCSError from './error';
+import {
     ErrKindBadRequest,
     ErrKindConflict,
     ErrKindForbidden,
@@ -16,7 +16,7 @@ import {
  * Error class for GitHub Cloud Storage
  */
 export {
-    IGitHubCloudStorageError,
+    GHCSError,
     ErrKindBadRequest,
     ErrKindConflict,
     ErrKindForbidden,

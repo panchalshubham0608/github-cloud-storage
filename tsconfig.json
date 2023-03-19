@@ -17,11 +17,12 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "noUnusedParameters": true,
-    "noUnusedLocals": true    
+    "noUnusedLocals": true
   },
   "include": [
     "src/**/*.ts",
-    "index.ts"
+    "index.ts",
+    "local/**/*.ts"
   ],
   "exclude": [
     "dist",

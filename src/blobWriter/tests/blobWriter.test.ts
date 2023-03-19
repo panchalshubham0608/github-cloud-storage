@@ -75,7 +75,7 @@ describe('BlobWriter', () => {
             expect(commit).toHaveProperty('message');
 
             expect(blobMetadata).toHaveProperty('name');
-            expect(blobMetadata?.name).toBe(filename);            
+            expect(blobMetadata?.name).toBe(filename);
             expect(blobMetadata).toHaveProperty('path');
             expect(blobMetadata?.path).toBe(path);
             expect(blobMetadata).toHaveProperty('size');
@@ -127,7 +127,7 @@ describe('BlobWriter', () => {
             expect(commit).toHaveProperty('message');
 
             expect(blobMetadata).toHaveProperty('name');
-            expect(blobMetadata?.name).toBe(filename);            
+            expect(blobMetadata?.name).toBe(filename);
             expect(blobMetadata).toHaveProperty('path');
             expect(blobMetadata?.path).toBe(path);
             expect(blobMetadata).toHaveProperty('size');
@@ -199,7 +199,7 @@ describe('BlobWriter', () => {
             let commit : ICommit | null = null;
             let blobMetadata : IBlobMetadata | null = null;
             let error = null;
-            
+
             try {
                 [commit, blobMetadata] = await blobWriter.Write(path, content);
             } catch (err) {

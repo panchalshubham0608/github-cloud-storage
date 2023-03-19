@@ -1,19 +1,19 @@
 /**
- * Defines a generic Error for the library
+ * @type{GHCSError} defines a generic Error for the library
  */
-export default interface IGitHubCloudStorageError {
-    /**
-     * The HTTP status code
-     */
-    status_code: number;
+export default interface GHCSError extends Error {
 
     /**
-     * The error message
+     * response status code
+     * @readonly
+     * @type{number}
      */
-    message: string;
+    readonly status_code: number;
 
     /**
-     * The path of the blob for which the error occurred
+     * request path that resulted in the error
+     * @readonly
+     * @type{string}
      */
-    path: string;
+    readonly request_path?: string;
 }
